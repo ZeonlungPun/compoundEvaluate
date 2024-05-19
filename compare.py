@@ -7,9 +7,9 @@ from lightgbm.sklearn import LGBMRegressor
 import seaborn as sns
 import matplotlib.pyplot as plt
 # load the data
-descriptor=pd.read_csv('descriptor_.csv')
-activity=pd.read_excel('ERα_activity.xlsx')
-shap_value=pd.read_csv('shap.csv').loc[:,'shap']
+descriptor=pd.read_csv('/home/kingargroo/SparseAdditiveModel-main/Demo_GSAM/descriptor_.csv')
+activity=pd.read_excel('/home/kingargroo/SparseAdditiveModel-main/Demo_GSAM/ERα_activity.xlsx')
+shap_value=pd.read_csv('/home/kingargroo/SparseAdditiveModel-main/Demo_GSAM/shap.csv').loc[:,'shap']
 non_zero_id=np.where(shap_value>0)[0]
 x,y=descriptor,activity.loc[:,"pIC50"]
 x,y=np.array(x),np.array(y)
@@ -73,37 +73,39 @@ for _ in range(20):
        result4.append(acc4)
        result5.append(acc5)
 
-total = pd.DataFrame({'top 50': result1, 'rank:50-100': result2,'rank:100-150':result3,'not important':result4,'random':result5})
+total = pd.DataFrame({'top 50': result1, 'rank:50-100': result2,'rank:100-150':result3,'random':result5,'not important':result4})
 #total.boxplot()
+sns.set(font_scale=2)
 sns.boxplot(data=total)
-#plt.xticks(ticks=np.arange(0, len(total.columns), labels=total.columns), rotation=45)
 plt.ylabel('R-square')
-plt.title('performance of LightGBM model using different descriptor')
-plt.show()
+#plt.xticks(ticks=np.arange(0, len(total.columns), labels=total.columns), rotation=45)
 
-#senstive analysis
-respond1=descriptor.loc[:,'MDEC-23']
-plt.scatter(np.array(respond1),y)
-plt.ylabel('pIC50')
-plt.xlabel('MDEC-23')
-plt.show()
-
-respond2=descriptor.loc[:,'LipoaffinityIndex']
-plt.scatter(np.array(respond2),y)
-plt.ylabel('pIC50')
-plt.xlabel('LipoaffinityIndex')
-plt.show()
-
-
-respond3=descriptor.loc[:,'nC']
-plt.scatter(np.array(respond3),y)
-plt.ylabel('pIC50')
-plt.xlabel('nC')
-plt.show()
-
-
-respond4=descriptor.loc[:,'maxHsOH']
-plt.scatter(np.array(respond4),y)
-plt.ylabel('pIC50')
-plt.xlabel('maxHsOH')
-plt.show()
+# plt.title('performance of LightGBM model using different descriptor')
+# plt.show()
+# 
+# #senstive analysis
+# respond1=descriptor.loc[:,'MDEC-23']
+# plt.scatter(np.array(respond1),y)
+# plt.ylabel('pIC50')
+# plt.xlabel('MDEC-23')
+# plt.show()
+# 
+# respond2=descriptor.loc[:,'LipoaffinityIndex']
+# plt.scatter(np.array(respond2),y)
+# plt.ylabel('pIC50')
+# plt.xlabel('LipoaffinityIndex')
+# plt.show()
+# 
+# 
+# respond3=descriptor.loc[:,'nC']
+# plt.scatter(np.array(respond3),y)
+# plt.ylabel('pIC50')
+# plt.xlabel('nC')
+# plt.show()
+# 
+# 
+# respond4=descriptor.loc[:,'maxHsOH']
+# plt.scatter(np.array(respond4),y)
+# plt.ylabel('pIC50')
+# plt.xlabel('maxHsOH')
+# plt.show()
